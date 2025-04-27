@@ -1,8 +1,9 @@
+import TableComponent from "@/components/TableComponent";
 import { ibgeApiClient } from "@/lib/IbgeApiClient";
 import { QueryInterface } from "@/types/QueryInterface";
 import { useEffect, useState } from "react";
 
-export default function Home() {
+export default function Table() {
   const [totalPib, setTotalPib] = useState<QueryInterface>();
 
   async function getTotalPib() {
@@ -18,17 +19,17 @@ export default function Home() {
 
   return (
     <div>
-      <h1>PIB</h1>
-      {totalPib &&
-        Object.entries(totalPib.resultados[0].series[0].serie).map(
-          ([year, value]) => (
-            <div key={year}>
-              <h2>
-                {year} - {parseFloat(value)}
-              </h2>
-            </div>
-          )
-        )}
+      {totalPib && (
+        <TableComponent
+          data={Object.entries(totalPib.resultados[0].series[0].serie).map(
+            ([year, value]) => ({
+              ano: year,
+              valor: value,
+            })
+          )}
+          columns={["ano", "valor"]}
+        />
+      )}
     </div>
   );
 }
