@@ -1,32 +1,19 @@
 import TableComponent from "@/components/TableComponent";
-import { ibgeApiClient } from "@/lib/IbgeApiClient";
-import { QueryInterface } from "@/types/QueryInterface";
-import { useEffect, useState } from "react";
+import { usePibData } from "@/hooks/usePibData";
+import { PIBValuesInterface } from "@/types/PIBValuesInterface";
+import { formatCurrency } from "@/utils/convertValueToDolar";
 
 export default function Table() {
-  const [totalPib, setTotalPib] = useState<QueryInterface>();
-
-  async function getTotalPib() {
-    const response = await ibgeApiClient.get<QueryInterface[]>(
-      "/agregados/6784/periodos/2010-2025/variaveis/9808?localidades=N1[all]"
-    );
-    setTotalPib(response.data[0]);
-  }
-
-  useEffect(() => {
-    getTotalPib();
-  }, []);
+  const { pibTotal, pibPerCapita, isLoading } = usePibData();
 
   return (
-    <div>
-      {totalPib && (
+    <div className="flex flex-col w-full h-screen items-center justify-center">
+      {pibTotal && (
         <TableComponent
-          data={Object.entries(totalPib.resultados[0].series[0].serie).map(
-            ([year, value]) => ({
-              ano: year,
-              valor: value,
-            })
-          )}
+          data={pibTotal.map((pib: PIBValuesInterface) => ({
+            ano: pib.year,
+            valor: formatCurrency(pib.value, "en-US", "USD"),
+          }))}
           columns={["ano", "valor"]}
         />
       )}
