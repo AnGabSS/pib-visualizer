@@ -2,6 +2,7 @@ import BarChartsComponent from "@/components/BarChartsComponent/BarChartsCompone
 import LineChartsComponent from "@/components/LineChartsComponent/LineChartsComponent";
 import Tabs from "@/components/Tabs/Tabs";
 import { usePibData } from "@/hooks/usePibData";
+import { TabInterface } from "@/types/TabInterface";
 import { formatCurrency } from "@/utils/formatCurrency";
 import { useState } from "react";
 
@@ -33,6 +34,16 @@ export default function Home() {
     };
   });
 
+  const firstInfoChar = {
+    key: "valueTotal",
+    name: "Total"
+  }
+
+  const secondInfoChar = {
+    key: "valuePerCapita",
+    name: "Per capito"
+  }
+
   return (
     <div className="flex flex-col w-full h-screen items-center justify-center p-10">
       <Tabs
@@ -46,8 +57,8 @@ export default function Home() {
         >
           <BarChartsComponent
             data={pibDataForChart}
-            firstLineKey="valueTotal"
-            secondLineKey="valuePerCapita"
+            firstBar={firstInfoChar}
+            secondBar={secondInfoChar}
             xAxisKey="year"
             formatter={(value) => formatCurrency(value, "en-US", "USD")}
           />
@@ -57,8 +68,8 @@ export default function Home() {
         >
           <LineChartsComponent
             data={pibDataForChart}
-            firstLineKey="valueTotal"
-            secondLineKey="valuePerCapita"
+            firstLine={firstInfoChar}
+            secondLine={secondInfoChar}
             xAxisKey="year"
             formatter={(value) => formatCurrency(value, "en-US", "USD")}
           />

@@ -3,12 +3,14 @@ import { getPibTotal } from "@/api/get-pib-total";
 import { getPibPerCapita } from "@/api/get-pib-per-capita";
 import { PibUnitedInterface } from "@/types/PibUnitedInterface";
 import { PIBValuesInterface } from "@/types/PIBValuesInterface";
+import { getTodayDollarQuotation } from "@/api/get-today-dollar-quotation";
 
 export function usePibData() {
   const [pibTotal, setPibTotal] = useState<PIBValuesInterface[] | null>(null);
   const [pibPerCapita, setPibPerCapita] = useState<PIBValuesInterface[] | null>(
     null
   );
+  const [dollar, setDollar] = useState<number>();
   const [pibUnited, setPibUnited] = useState<PibUnitedInterface[] | null>(null);
   const [isLoading, setIsLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
@@ -16,9 +18,10 @@ export function usePibData() {
   useEffect(() => {
     async function fetchPibData() {
       try {
+        const dollarData = await getTodayDollarQuotation();
         const [totalData, perCapitaData] = await Promise.all([
-          getPibTotal(),
-          getPibPerCapita(),
+          getPibTotal(dollarData),
+          getPibPerCapita(dollarData),
         ]);
 
         setPibTotal(totalData);

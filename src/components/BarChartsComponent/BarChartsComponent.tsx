@@ -1,3 +1,4 @@
+import { ChartDataKeyInterface } from "@/types/ChartDataKeyInterface";
 import {
   Bar,
   BarChart,
@@ -11,16 +12,16 @@ import {
 
 interface Props {
   data: any[];
-  firstLineKey: string;
-  secondLineKey: string;
+  firstBar: ChartDataKeyInterface;
+  secondBar: ChartDataKeyInterface;
   xAxisKey: string;
   formatter?: (value: any) => string | number;
 }
 
 const BarChartsComponent = ({
   data,
-  firstLineKey,
-  secondLineKey,
+  firstBar,
+  secondBar,
   xAxisKey,
   formatter,
 }: Props) => {
@@ -41,14 +42,14 @@ const BarChartsComponent = ({
           <Legend />
           <Bar
             type="monotone"
-            dataKey={firstLineKey}
-            name="Pib Total"
+            dataKey={firstBar.key}
+            name={firstBar.name}
             fill="#1bb17a"
           />
           <Bar
             type="monotone"
-            dataKey={secondLineKey}
-            name="Pib Per Capita"
+            dataKey={secondBar.key}
+            name={secondBar.name}
             fill="#f58561"
           />
         </BarChart>

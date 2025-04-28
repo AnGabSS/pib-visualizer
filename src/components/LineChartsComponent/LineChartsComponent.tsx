@@ -1,3 +1,4 @@
+import { ChartDataKeyInterface } from "@/types/ChartDataKeyInterface";
 import {
   CartesianGrid,
   Legend,
@@ -9,18 +10,22 @@ import {
   YAxis,
 } from "recharts";
 
+interface lineType{
+
+}
+
 interface Props {
   data: any[];
-  firstLineKey?: string;
-  secondLineKey?: string;
+  firstLine: ChartDataKeyInterface;
+  secondLine: ChartDataKeyInterface;
   xAxisKey?: string;
   formatter?: (value: any) => string | number;
 }
 
 const LineChartsComponent = ({
   data,
-  firstLineKey,
-  secondLineKey,
+  firstLine,
+  secondLine,
   xAxisKey,
   formatter,
 }: Props) => {
@@ -43,14 +48,14 @@ const LineChartsComponent = ({
           <Legend />
           <Line
             type="monotone"
-            dataKey={firstLineKey}
-            name="Pib Total"
+            dataKey={firstLine.key}
+            name={firstLine.name}
             stroke="#1bb17a"
           />
           <Line
             type="monotone"
-            dataKey={secondLineKey}
-            name="Pib Per Capita"
+            dataKey={secondLine.key}
+            name={secondLine.name}
             stroke="#f58561"
           />
         </LineChart>

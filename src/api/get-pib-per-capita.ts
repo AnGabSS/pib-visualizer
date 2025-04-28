@@ -1,11 +1,11 @@
 import { ibgeApiClient } from "@/lib/IbgeApiClient";
 import { QueryInterface } from "@/types/QueryInterface";
-import { convertValueToDolar } from "@/utils/convertValueToDolar";
 import { PIBValuesInterface } from "./../types/PIBValuesInterface";
+import { getTodayDollarQuotation } from "./get-today-dollar-quotation";
 
 // Function to get the per capita pib by year
 // Função para obter o PIB per capita por ano
-export const getPibPerCapita = async () => {
+export const getPibPerCapita = async (currency?: number) => {
   const response = await ibgeApiClient.get<QueryInterface[]>(
     "/agregados/6784/periodos/2010-2025/variaveis/9812?localidades=N1[all]"
   );
@@ -17,7 +17,7 @@ export const getPibPerCapita = async () => {
       async ([year, value]) => {
         return {
           year: year,
-          value: await convertValueToDolar(parseFloat(value)),
+          value: currency ? await parseFloat(value) / currency : parseFloat(value),
         };
       }
     )
