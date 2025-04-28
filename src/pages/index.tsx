@@ -1,34 +1,69 @@
-import { ibgeApiClient } from "@/lib/IbgeApiClient";
-import { QueryInterface } from "@/types/QueryInterface";
-import { useEffect, useState } from "react";
+import BarChartsComponent from "@/components/BarChartsComponent/BarChartsComponent";
+import LineChartsComponent from "@/components/LineChartsComponent/LineChartsComponent";
+import Tabs from "@/components/Tabs/Tabs";
+import { usePibData } from "@/hooks/usePibData";
+import { formatCurrency } from "@/utils/formatCurrency";
+import { useState } from "react";
 
 export default function Home() {
-  const [totalPib, setTotalPib] = useState<QueryInterface>();
+  const { pibTotal, pibPerCapita, isLoading } = usePibData();
+  const [selectedTab, setSelectedTab] = useState<string>("bar");
+  const tabs: TabInterface[] = [
+    { key: "bar", value: "Barras" },
+    { key: "line", value: "Linha" },
+  ];
 
-  async function getTotalPib() {
-    const response = await ibgeApiClient.get<QueryInterface[]>(
-      "/agregados/6784/periodos/2010-2025/variaveis/9808?localidades=N1[all]"
+  if (isLoading || !pibTotal || !pibPerCapita) {
+    return (
+      <div className="w-full h-screen flex items-center justify-center">
+        <span>Carregando...</span>
+      </div>
     );
-    setTotalPib(response.data[0]);
   }
 
-  useEffect(() => {
-    getTotalPib();
-  }, []);
+  const pibDataForChart = pibTotal.map((pib) => {
+    const perCapitaValue = pibPerCapita.find(
+      (perCapita) => perCapita.year === pib.year
+    )?.value;
+
+    return {
+      year: pib.year,
+      valueTotal: pib.value,
+      valuePerCapita: perCapitaValue,
+    };
+  });
 
   return (
-    <div>
-      <h1>PIB</h1>
-      {totalPib &&
-        Object.entries(totalPib.resultados[0].series[0].serie).map(
-          ([year, value]) => (
-            <div key={year}>
-              <h2>
-                {year} - {parseFloat(value)}
-              </h2>
-            </div>
-          )
-        )}
+    <div className="flex flex-col w-full h-screen items-center justify-center p-10">
+      <Tabs
+        tabs={tabs}
+        selectedTab={selectedTab}
+        onTabChange={setSelectedTab}
+      />
+      <>
+        <section
+          className={`w-full h-[90%] ${selectedTab === "bar" ? "" : "hidden"}`}
+        >
+          <BarChartsComponent
+            data={pibDataForChart}
+            firstLineKey="valueTotal"
+            secondLineKey="valuePerCapita"
+            xAxisKey="year"
+            formatter={(value) => formatCurrency(value, "en-US", "USD")}
+          />
+        </section>
+        <section
+          className={`w-full h-[90%] ${selectedTab === "line" ? "" : "hidden"}`}
+        >
+          <LineChartsComponent
+            data={pibDataForChart}
+            firstLineKey="valueTotal"
+            secondLineKey="valuePerCapita"
+            xAxisKey="year"
+            formatter={(value) => formatCurrency(value, "en-US", "USD")}
+          />
+        </section>
+      </>
     </div>
   );
 }

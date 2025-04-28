@@ -1,28 +1,52 @@
-import { getPibTotal } from "@/api/get-pib-total";
-import { PIBValuesInterface } from "@/types/PIBValuesInterface";
 import { useEffect, useState } from "react";
-import { getPibPerCapita } from "./../api/get-pib-per-capita";
+import { getPibTotal } from "@/api/get-pib-total";
+import { getPibPerCapita } from "@/api/get-pib-per-capita";
+import { PibUnitedInterface } from "@/types/PibUnitedInterface";
+import { PIBValuesInterface } from "@/types/PIBValuesInterface";
 
 export function usePibData() {
   const [pibTotal, setPibTotal] = useState<PIBValuesInterface[] | null>(null);
   const [pibPerCapita, setPibPerCapita] = useState<PIBValuesInterface[] | null>(
     null
   );
-
-  const [isLoading, setIsLoading] = useState(true);
+  const [pibUnited, setPibUnited] = useState<PibUnitedInterface[] | null>(null);
+  const [isLoading, setIsLoading] = useState<boolean>(true);
+  const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
-    const pibTotalQuery = getPibTotal();
-    const pibPerCapitaQuery = getPibPerCapita();
+    async function fetchPibData() {
+      try {
+        const [totalData, perCapitaData] = await Promise.all([
+          getPibTotal(),
+          getPibPerCapita(),
+        ]);
 
-    Promise.all([pibTotalQuery, pibPerCapitaQuery]).then(
-      ([pibTotal, pibPerCapita]) => {
-        setPibTotal(pibTotal);
-        setPibPerCapita(pibPerCapita);
+        setPibTotal(totalData);
+        setPibPerCapita(perCapitaData);
+
+        const unitedData = totalData.map((totalItem) => {
+          const matchingPerCapita = perCapitaData.find(
+            (perCapitaItem) => perCapitaItem.year === totalItem.year
+          );
+
+          return {
+            year: totalItem.year,
+            total: totalItem.value,
+            percapita: matchingPerCapita ? matchingPerCapita.value : 0,
+          };
+        });
+
+        setPibUnited(unitedData);
+      } catch (err) {
+        console.error("Failed to fetch PIB data:", err);
+        setError("Failed to load PIB data.");
+      } finally {
         setIsLoading(false);
       }
-    );
+    }
+
+    fetchPibData();
   }, []);
 
-  return { pibTotal, pibPerCapita, isLoading };
+  return { pibTotal, pibPerCapita, pibUnited, isLoading, error };
 }
