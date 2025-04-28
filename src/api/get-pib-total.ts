@@ -6,7 +6,7 @@ import { QueryInterface } from "@/types/QueryInterface";
 // Função para obter o PIB total por ano
 export const getPibTotal = async (currency?: number) => {
   const response = await ibgeApiClient.get<QueryInterface[]>(
-    "/agregados/6784/periodos/2010-2025/variaveis/9808?localidades=N1[all]"
+    "/agregados/6784/periodos/all/variaveis/9808?localidades=N1[all]"
   );
 
   const totalPib: PIBValuesInterface[] = await Promise.all(

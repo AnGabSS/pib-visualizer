@@ -1,5 +1,5 @@
-import BarChartsComponent from "@/components/BarChartsComponent/BarChartsComponent";
-import LineChartsComponent from "@/components/LineChartsComponent/LineChartsComponent";
+import BarChartsComponent from "@/components/BarChartsComponent";
+import LineChartsComponent from "@/components/LineChartsComponent";
 import Tabs from "@/components/Tabs/Tabs";
 import { usePibData } from "@/hooks/usePibData";
 import { TabInterface } from "@/types/TabInterface";
@@ -7,14 +7,14 @@ import { formatCurrency } from "@/utils/formatCurrency";
 import { useState } from "react";
 
 export default function Home() {
-  const { pibTotal, pibPerCapita, isLoading } = usePibData();
+  const { pibUnited, isLoading } = usePibData();
   const [selectedTab, setSelectedTab] = useState<string>("bar");
   const tabs: TabInterface[] = [
     { key: "bar", value: "Barras" },
     { key: "line", value: "Linha" },
   ];
 
-  if (isLoading || !pibTotal || !pibPerCapita) {
+  if (isLoading)  {
     return (
       <div className="w-full h-screen flex items-center justify-center">
         <span>Carregando...</span>
@@ -22,25 +22,23 @@ export default function Home() {
     );
   }
 
-  const pibDataForChart = pibTotal.map((pib) => {
-    const perCapitaValue = pibPerCapita.find(
-      (perCapita) => perCapita.year === pib.year
-    )?.value;
+  if(!isLoading && !pibUnited){
+    return (
+      <div className="w-full h-screen flex items-center justify-center p-10">
+        <span>Não foi possível buscar os valores do pib, por favor verificar console de desenvolvedor para mais detalhes</span>
+      </div>
+    );
+  }
 
-    return {
-      year: pib.year,
-      valueTotal: pib.value,
-      valuePerCapita: perCapitaValue,
-    };
-  });
+
 
   const firstInfoChar = {
-    key: "valueTotal",
+    key: "total",
     name: "Total"
   }
 
   const secondInfoChar = {
-    key: "valuePerCapita",
+    key: "percapita",
     name: "Per capito"
   }
 
@@ -56,7 +54,7 @@ export default function Home() {
           className={`w-full h-[90%] ${selectedTab === "bar" ? "" : "hidden"}`}
         >
           <BarChartsComponent
-            data={pibDataForChart}
+            data={pibUnited!}
             firstBar={firstInfoChar}
             secondBar={secondInfoChar}
             xAxisKey="year"
@@ -67,7 +65,7 @@ export default function Home() {
           className={`w-full h-[90%] ${selectedTab === "line" ? "" : "hidden"}`}
         >
           <LineChartsComponent
-            data={pibDataForChart}
+            data={pibUnited!}
             firstLine={firstInfoChar}
             secondLine={secondInfoChar}
             xAxisKey="year"

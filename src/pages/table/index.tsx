@@ -6,10 +6,27 @@ import { formatCurrency } from "@/utils/formatCurrency";
 export default function Table() {
   const { pibUnited, isLoading } = usePibData();
 
+
+  if (isLoading) {
+    return (
+      <div className="w-full h-screen flex items-center justify-center">
+        <span>Carregando...</span>
+      </div>
+    );
+  }
+
+  if(!isLoading && !pibUnited){
+    return (
+      <div className="w-full h-screen flex items-center justify-center p-10">
+        <span>Não foi possível buscar os valores do pib, por favor verificar console de desenvolvedor para mais detalhes</span>
+      </div>
+    );
+  }
+
   return (
     <div className="flex flex-col w-full h-screen items-center justify-center">
       {pibUnited && (
-        <section className="w-[90%] md:w-[70%] h-[90%] md:h-[70%]">
+
           <TableComponent
             data={pibUnited.map((pib: PibUnitedInterface) => ({
               ano: pib.year,
@@ -22,7 +39,6 @@ export default function Table() {
               { key: "percapita", label: "PIB Per Capita" },
             ]}
           />
-        </section>
       )}
     </div>
   );

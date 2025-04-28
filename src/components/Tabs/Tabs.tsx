@@ -13,7 +13,7 @@ const Tabs = (props: Props) => {
         <button
           key={tab.key}
           className={`${
-            tab.key === props.selectedTab ? "bg-emerald-500 text-white" : ""
+            tab.key === props.selectedTab ? "bg-emerald-500 text-white" : "hover:bg-emerald-400/30 hover:text-white"
           } rounded-xl px-4 py-2 text-emerald-500 cursor-pointer`}
           onClick={() => props.onTabChange(tab.key)}
           disabled={tab.key == props.selectedTab}

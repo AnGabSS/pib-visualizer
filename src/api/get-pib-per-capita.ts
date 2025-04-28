@@ -7,7 +7,7 @@ import { getTodayDollarQuotation } from "./get-today-dollar-quotation";
 // Função para obter o PIB per capita por ano
 export const getPibPerCapita = async (currency?: number) => {
   const response = await ibgeApiClient.get<QueryInterface[]>(
-    "/agregados/6784/periodos/2010-2025/variaveis/9812?localidades=N1[all]"
+    "/agregados/6784/periodos/all/variaveis/9812?localidades=N1[all]"
   );
 
   // Convert the value to dollar, the Object.entries is used because the value of serie comes as of type "string": "value"

@@ -10,7 +10,6 @@ export function usePibData() {
   const [pibPerCapita, setPibPerCapita] = useState<PIBValuesInterface[] | null>(
     null
   );
-  const [dollar, setDollar] = useState<number>();
   const [pibUnited, setPibUnited] = useState<PibUnitedInterface[] | null>(null);
   const [isLoading, setIsLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
