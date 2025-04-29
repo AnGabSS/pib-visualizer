@@ -6,17 +6,19 @@ interface Props {
   onTabChange: (tab: string) => void;
 }
 
-const Tabs = (props: Props) => {
+const Tabs = ({ tabs, selectedTab, onTabChange }: Props) => {
   return (
     <nav className="flex justify-center gap-4 p-4">
-      {props.tabs.map((tab) => (
+      {tabs.map((tab) => (
         <button
           key={tab.key}
           className={`${
-            tab.key === props.selectedTab ? "bg-emerald-500 text-white" : "hover:bg-emerald-400/30 hover:text-white"
+            tab.key === selectedTab
+              ? "bg-emerald-500 text-white"
+              : "hover:bg-emerald-400/30 hover:text-white"
           } rounded-xl px-4 py-2 text-emerald-500 cursor-pointer`}
-          onClick={() => props.onTabChange(tab.key)}
-          disabled={tab.key == props.selectedTab}
+          onClick={() => onTabChange(tab.key)}
+          disabled={tab.key == selectedTab}
         >
           {tab.value}
         </button>
