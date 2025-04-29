@@ -1,28 +1,48 @@
+import { getPibData } from "@/api/get-pib-data";
 import BarChartsComponent from "@/components/BarChartsComponent";
 import LineChartsComponent from "@/components/LineChartsComponent";
 import Tabs from "@/components/Tabs/Tabs";
-import { usePibData } from "@/hooks/usePibData";
+import { PibUnitedInterface } from "@/types/PibUnitedInterface";
+import { PIBValuesInterface } from "@/types/PIBValuesInterface";
 import { TabInterface } from "@/types/TabInterface";
 import { formatCurrency } from "@/utils/formatCurrency";
 import { useState } from "react";
 
-export default function Home() {
-  const { pibUnited, isLoading } = usePibData();
+interface PIBPageProps {
+  pibTotal: PIBValuesInterface[];
+  pibPerCapita: PIBValuesInterface[];
+  pibUnited: PibUnitedInterface[];
+}
+
+export async function getStaticProps() {
+  try {
+    const data = await getPibData();
+
+    return {
+      props: data,
+      revalidate: 60 * 60 * 24 * 30,
+    };
+  } catch (error) {
+    console.error("Erro ao buscar dados do PIB:", error);
+    return {
+      props: {
+        pibTotal: [],
+        pibPerCapita: [],
+        pibUnited: [],
+      },
+      revalidate: 60 * 60 * 24,
+    };
+  }
+}
+
+export default function Home({ pibUnited }: PIBPageProps) {
   const [selectedTab, setSelectedTab] = useState<string>("bar");
   const tabs: TabInterface[] = [
     { key: "bar", value: "Barras" },
     { key: "line", value: "Linha" },
   ];
 
-  if (isLoading) {
-    return (
-      <div className="w-full h-screen flex items-center justify-center">
-        <span>Carregando...</span>
-      </div>
-    );
-  }
-
-  if (!isLoading && !pibUnited) {
+  if (!pibUnited) {
     return (
       <div className="w-full h-screen flex items-center justify-center p-10">
         <span>

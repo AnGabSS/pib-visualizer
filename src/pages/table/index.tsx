@@ -1,20 +1,38 @@
+import { getPibData } from "@/api/get-pib-data";
 import TableComponent from "@/components/TableComponent";
-import { usePibData } from "@/hooks/usePibData";
 import { PibUnitedInterface } from "@/types/PibUnitedInterface";
+import { PIBValuesInterface } from "@/types/PIBValuesInterface";
 import { formatCurrency } from "@/utils/formatCurrency";
 
-export default function Table() {
-  const { pibUnited, isLoading } = usePibData();
+interface PIBPageProps {
+  pibTotal: PIBValuesInterface[];
+  pibPerCapita: PIBValuesInterface[];
+  pibUnited: PibUnitedInterface[];
+}
 
-  if (isLoading) {
-    return (
-      <div className="w-full h-screen flex items-center justify-center">
-        <span>Carregando...</span>
-      </div>
-    );
+export async function getStaticProps() {
+  try {
+    const data = await getPibData();
+
+    return {
+      props: data,
+      revalidate: 60 * 60 * 24 * 30,
+    };
+  } catch (error) {
+    console.error("Erro ao buscar dados do PIB:", error);
+    return {
+      props: {
+        pibTotal: [],
+        pibPerCapita: [],
+        pibUnited: [],
+      },
+      revalidate: 60 * 60 * 24,
+    };
   }
+}
 
-  if (!isLoading && !pibUnited) {
+export default function Table({ pibUnited }: PIBPageProps) {
+  if (!pibUnited) {
     return (
       <div className="w-full h-screen flex items-center justify-center p-10">
         <span>
