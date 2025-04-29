@@ -40,7 +40,7 @@ export default function Table({ pibUnited }: PIBPageProps) {
   }
 
   return (
-    <div className="flex flex-col w-full h-[90vh] items-center justify-center">
+    <div className="flex flex-col w-full h-screen items-center justify-center">
       {pibUnited && (
         <TableComponent
           data={pibUnited.map((pib: PibUnitedInterface) => ({
@@ -53,7 +53,7 @@ export default function Table({ pibUnited }: PIBPageProps) {
             { key: "total", label: "PIB Total" },
             { key: "percapita", label: "PIB Per Capita" },
           ]}
-          className="bg-white rounded-xl"
+          className="rounded-xl"
         />
       )}
     </div>

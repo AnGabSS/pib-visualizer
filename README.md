@@ -1,6 +1,6 @@
 # PIB Visualizer
 
-Link para o deploy projeto: https://pib-visualizer.vercel.app/
+Link para o deploy do projeto: https://pib-visualizer.vercel.app/
 
 ## Descrição
 
@@ -47,10 +47,10 @@ Projeto conta com dois designs, ambos fiz baseado nas cores da Conéctar, o prin
 
 ### Primeiro Design
 
-![1-chart](<Opera Snapshot_2025-04-28_223824_localhost.png>)
-![1-table](<Opera Snapshot_2025-04-28_223911_localhost.png>)
+![1-chart](<public/imgs/design1-charts.png>)
+![1-table](<public/imgs/design1-table.png>)
 
 ### Segundo Design
 
-![2-chart](<Opera Snapshot_2025-04-28_224057_localhost.png>)
-![2-table](<Opera Snapshot_2025-04-28_224110_localhost.png>)
+![2-chart](<public/imgs/design2-charts.png>)
+![2-table](<public/imgs/design2-table.png>)

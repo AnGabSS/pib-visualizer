@@ -50,12 +50,12 @@ export default function Home({ pibUnited }: PIBPageProps) {
 
   const firstInfoChar = {
     key: "total",
-    name: "Total",
+    name: "Pib Total",
   };
 
   const secondInfoChar = {
     key: "percapita",
-    name: "Per capito",
+    name: "Pib Per capito",
   };
 
   return (
@@ -67,6 +67,7 @@ export default function Home({ pibUnited }: PIBPageProps) {
           onTabChange={setSelectedTab}
         />
         <>
+        <h2 className="text-center">Valores em dólares</h2>
           <section
             className={`w-full h-[90%] ${
               selectedTab === "bar" ? "" : "hidden"

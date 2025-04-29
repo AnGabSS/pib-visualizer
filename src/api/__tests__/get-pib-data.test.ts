@@ -9,7 +9,7 @@ jest.mock("@/api/get-today-dollar-quotation");
 
 describe("getPibData", () => {
   it("should return combined PIB data with total, per capita and united data", async () => {
-    // Usando jest.mocked para tipar os mocks corretamente
+
     const mockedGetTodayDollarQuotation = jest.mocked(getTodayDollarQuotation);
     const mockedGetPibTotal = jest.mocked(getPibTotal);
     const mockedGetPibPerCapita = jest.mocked(getPibPerCapita);

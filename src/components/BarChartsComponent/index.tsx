@@ -34,16 +34,19 @@ const BarChartsComponent = ({
       <ResponsiveContainer width="100%" height="100%">
         <BarChart
           data={data}
-          margin={{ top: 5, right: 30, left: 20, bottom: 5 }}
+          margin={{ top: 5, right: 60, left: 60, bottom: 5 }}
+
         >
           <CartesianGrid strokeDasharray="3 3" />
           <XAxis
             dataKey={xAxisKey}
-            tickFormatter={(value, index) =>
-              formatter ? formatter(value, index) : String(value)
-            }
           />
-          <YAxis tickCount={32} />
+          <YAxis 
+              tickCount={32}             
+              tickFormatter={(value, index) =>
+                  formatter ? formatter(value, index) : String(value)
+                }
+          />
           <Tooltip
             formatter={(value: string | number) =>
               formatter ? formatter(value) : value
