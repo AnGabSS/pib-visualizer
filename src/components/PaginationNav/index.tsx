@@ -22,7 +22,7 @@ const PaginationNav = ({
     "bg-emerald-500 text-white hover:bg-emerald-600 transition delay-20 duration-100 ease-in-out hover:-translate-y-1 hover:scale-110";
 
   return (
-    <nav className="flex justify-center items-center gap-2 py-4 flex-col md:flex-row text-sm md:text-xl">
+    <nav className="flex justify-center items-center gap-2 py-4 flex-col md:flex-row text-sm md:text-md">
       <div className="flex justify-center items-center gap-2 py-4">
         <button
           onClick={() => onPageChange(page - 1)}

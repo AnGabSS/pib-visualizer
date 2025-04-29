@@ -1,40 +1,56 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/pages/api-reference/create-next-app).
+# PIB Visualizer
 
-## Getting Started
+Link para o deploy projeto: https://pib-visualizer.vercel.app/
 
-First, run the development server:
+## Descrição
+
+Plataforma que apresenta a evolução do PIB total e per capita do Brasil em dólares, com gráficos interativos e uma tabela organizada. Os dados são consumidos da API do IBGE, garantindo que a aplicação seja atualizada com as informações mais recentes. A interface é totalmente responsiva e focada em desempenho.
+
+## Tecnologias Utilizadas
+
+- **Next.js**: Framework React para renderização do lado do servidor.
+- **TypeScript**: Supre a necessidade de tipagem estática no projeto.
+- **CSS**: Estilização da aplicação.
+- **API IBGE**: Fonte de dados para o PIB. https://servicodados.ibge.gov.br/api/docs
+- **economy-api**: api de dados econômicos do Brasil. https://github.com/awesomeapibrasil/economy-api
+- **Recharts**: Gráficos interativos.
+- **Tailwind CSS**: Estilização da aplicação.
+
+## Como Rodar
+
+Clone o repositório e execute:
 
 ```bash
+npm install
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+A aplicação estará disponível em `http://localhost:3000`.
 
-You can start editing the page by modifying `pages/index.tsx`. The page auto-updates as you edit the file.
+## Features
 
-[API routes](https://nextjs.org/docs/pages/building-your-application/routing/api-routes) can be accessed on [http://localhost:3000/api/hello](http://localhost:3000/api/hello). This endpoint can be edited in `pages/api/hello.ts`.
+- Visualização do PIB total e per capita do Brasil.
+- Gráficos interativos para melhor análise.
+- Tabela organizada com os dados.
+- Interface responsiva para diversos dispositivos.
 
-The `pages/api` directory is mapped to `/api/*`. Files in this directory are treated as [API routes](https://nextjs.org/docs/pages/building-your-application/routing/api-routes) instead of React pages.
+## Como Contribuir
 
-This project uses [`next/font`](https://nextjs.org/docs/pages/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+1. Fork o repositório.
+2. Crie uma branch para sua feature (`git checkout -b [FEATURE] nome-da-feature`).
+3. Faça suas alterações.
+4. Envie um pull request com uma descrição detalhada.
 
-## Learn More
+## Designs
 
-To learn more about Next.js, take a look at the following resources:
+Projeto conta com dois designs, ambos fiz baseado nas cores da Conéctar, o principal com fundo branco pois ficaria mais fiel ao app da conéctar e o secundário mais colorido com um fundo laranja que fiz inspirado no site deles, o primeiro está na branch `main` e o segundo na branch `SecondaryDesign`, então sim, pode ficar a vontade para utilizar o que mais gostar.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn-pages-router) - an interactive Next.js tutorial.
+### Primeiro Design
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+![1-chart](<Opera Snapshot_2025-04-28_223824_localhost.png>)
+![1-table](<Opera Snapshot_2025-04-28_223911_localhost.png>)
 
-## Deploy on Vercel
+### Segundo Design
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/pages/building-your-application/deploying) for more details.
+![2-chart](<Opera Snapshot_2025-04-28_224057_localhost.png>)
+![2-table](<Opera Snapshot_2025-04-28_224110_localhost.png>)

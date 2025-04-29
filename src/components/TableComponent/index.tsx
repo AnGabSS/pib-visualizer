@@ -38,7 +38,7 @@ const TableComponent = ({ data, columns, className, style }: Props) => {
           <thead className="bg-emerald-500 text-white border-b-2 border-solid border-emerald-500">
             <tr>
               {columns.map((column) => (
-                <th key={column.key} className="px-6 py-2 text-md md:text-2xl">
+                <th key={column.key} className="px-6 py-2 text-md md:text-lg">
                   {column.label}
                 </th>
               ))}
@@ -53,7 +53,7 @@ const TableComponent = ({ data, columns, className, style }: Props) => {
                 {columns.map((column) => (
                   <td
                     key={column.key}
-                    className="px-6 py-2 md:px-9 md:py-3 text-sm md:text-xl"
+                    className="px-6 py-2 md:px-9 md:py-3 text-sm md:text-md"
                   >
                     {row[column.key]}
                   </td>
