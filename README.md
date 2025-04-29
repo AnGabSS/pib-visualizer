@@ -1,10 +1,12 @@
 # PIB Visualizer
 
-Link para o deploy do projeto: https://pib-visualizer.vercel.app/
-
 ## Descrição
 
 Plataforma que apresenta a evolução do PIB total e per capita do Brasil em dólares, com gráficos interativos e uma tabela organizada. Os dados são consumidos da API do IBGE, garantindo que a aplicação seja atualizada com as informações mais recentes. A interface é totalmente responsiva e focada em desempenho.
+
+## Deploy da Aplicação
+
+[Clique aqui para acessar o deploy da aplicação](https://pib-visualizer.vercel.app)
 
 ## Tecnologias Utilizadas
 
@@ -16,16 +18,32 @@ Plataforma que apresenta a evolução do PIB total e per capita do Brasil em dó
 - **Recharts**: Gráficos interativos.
 - **Tailwind CSS**: Estilização da aplicação.
 
-## Como Rodar
+## Decisões de Design
 
-Clone o repositório e execute:
+- **Responsividade**: A aplicação foi construída com foco em dispositivos móveis e desktop.
+- **Desempenho**: A aplicação utiliza geração estática com getStaticProps para otimizar o carregamento e possibilitar a revalidação periódica (No caso, mensalmente) dos dados via Incremental Static Regeneration (ISR).
+- **Visualização clara dos dados**: Gráficos e tabelas foram organizados para facilitar a análise e compreensão dos dados econômicos, além do design minimalista para maior foco nos números.
 
+## Como Rodar Localmente
+
+1. Clone este repositório:
+```bash
+git clone https://github.com/AnGabSS/pib-visualizer.git
+cd pib-visualizer
+```
+
+2. Instale as dependências:
 ```bash
 npm install
+```
+
+3. Execute o servidor de desenvolvimento:
+```bash
 npm run dev
 ```
 
-A aplicação estará disponível em `http://localhost:3000`.
+4. Acesse a aplicação em: [http://localhost:3000](http://localhost:3000)
+
 
 ## Features
 
