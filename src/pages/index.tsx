@@ -14,7 +14,7 @@ export default function Home() {
     { key: "line", value: "Linha" },
   ];
 
-  if (isLoading)  {
+  if (isLoading) {
     return (
       <div className="w-full h-screen flex items-center justify-center">
         <span>Carregando...</span>
@@ -22,57 +22,64 @@ export default function Home() {
     );
   }
 
-  if(!isLoading && !pibUnited){
+  if (!isLoading && !pibUnited) {
     return (
       <div className="w-full h-screen flex items-center justify-center p-10">
-        <span>Não foi possível buscar os valores do pib, por favor verificar console de desenvolvedor para mais detalhes</span>
+        <span>
+          Não foi possível buscar os valores do pib, por favor verificar console
+          de desenvolvedor para mais detalhes
+        </span>
       </div>
     );
   }
 
-
-
   const firstInfoChar = {
     key: "total",
-    name: "Total"
-  }
+    name: "Total",
+  };
 
   const secondInfoChar = {
     key: "percapita",
-    name: "Per capito"
-  }
+    name: "Per capito",
+  };
 
   return (
-    <div className="flex flex-col w-full h-screen items-center justify-center p-10">
-      <Tabs
-        tabs={tabs}
-        selectedTab={selectedTab}
-        onTabChange={setSelectedTab}
-      />
-      <>
-        <section
-          className={`w-full h-[90%] ${selectedTab === "bar" ? "" : "hidden"}`}
-        >
-          <BarChartsComponent
-            data={pibUnited!}
-            firstBar={firstInfoChar}
-            secondBar={secondInfoChar}
-            xAxisKey="year"
-            formatter={(value) => formatCurrency(value, "en-US", "USD")}
-          />
-        </section>
-        <section
-          className={`w-full h-[90%] ${selectedTab === "line" ? "" : "hidden"}`}
-        >
-          <LineChartsComponent
-            data={pibUnited!}
-            firstLine={firstInfoChar}
-            secondLine={secondInfoChar}
-            xAxisKey="year"
-            formatter={(value) => formatCurrency(value, "en-US", "USD")}
-          />
-        </section>
-      </>
+    <div className="flex flex-col w-full h-[90vh] items-center justify-center  p-5 md:p-10">
+      <div className="flex flex-col w-full h-full items-center justify-center bg-white rounded-xl">
+        <Tabs
+          tabs={tabs}
+          selectedTab={selectedTab}
+          onTabChange={setSelectedTab}
+        />
+        <>
+          <section
+            className={`w-full h-[90%] ${
+              selectedTab === "bar" ? "" : "hidden"
+            }`}
+          >
+            <BarChartsComponent
+              data={pibUnited!}
+              firstBar={firstInfoChar}
+              secondBar={secondInfoChar}
+              xAxisKey="year"
+              formatter={(value) => formatCurrency(value, "en-US", "USD")}
+            />
+          </section>
+          <section
+            className={`w-full h-[90%] ${
+              selectedTab === "line" ? "" : "hidden"
+            }`}
+          >
+            <LineChartsComponent
+              data={pibUnited!}
+              firstLine={firstInfoChar}
+              secondLine={secondInfoChar}
+              xAxisKey="year"
+              formatter={(value) => formatCurrency(value, "en-US", "USD")}
+            />
+          </section>
+        </>
+      </div>
     </div>
   );
 }
