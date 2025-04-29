@@ -1,28 +1,43 @@
+import { getPibData } from "@/api/get-pib-data";
 import BarChartsComponent from "@/components/BarChartsComponent";
 import LineChartsComponent from "@/components/LineChartsComponent";
 import Tabs from "@/components/Tabs/Tabs";
-import { usePibData } from "@/hooks/usePibData";
+import { PIBPageProps } from "@/types/PIBPageProps";
 import { TabInterface } from "@/types/TabInterface";
 import { formatCurrency } from "@/utils/formatCurrency";
 import { useState } from "react";
 
-export default function Home() {
-  const { pibUnited, isLoading } = usePibData();
+//Get the data from the API one time every 30 days
+//Obtenha os dados da API uma vez a cada 30 dias
+export async function getStaticProps() {
+  try {
+    const data = await getPibData();
+
+    return {
+      props: data,
+      revalidate: 60 * 60 * 24 * 30,
+    };
+  } catch (error) {
+    console.error("Erro ao buscar dados do PIB:", error);
+    return {
+      props: {
+        pibTotal: [],
+        pibPerCapita: [],
+        pibUnited: [],
+      },
+      revalidate: 60 * 60 * 24,
+    };
+  }
+}
+
+export default function Home({ pibUnited }: PIBPageProps) {
   const [selectedTab, setSelectedTab] = useState<string>("bar");
   const tabs: TabInterface[] = [
     { key: "bar", value: "Barras" },
     { key: "line", value: "Linha" },
   ];
 
-  if (isLoading) {
-    return (
-      <div className="w-full h-screen flex items-center justify-center">
-        <span>Carregando...</span>
-      </div>
-    );
-  }
-
-  if (!isLoading && !pibUnited) {
+  if (!pibUnited) {
     return (
       <div className="w-full h-screen flex items-center justify-center p-10">
         <span>

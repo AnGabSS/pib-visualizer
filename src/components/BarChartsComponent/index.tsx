@@ -10,12 +10,16 @@ import {
   YAxis,
 } from "recharts";
 
+interface ChartDataItem {
+  [key: string]: string | number;
+}
+
 interface Props {
-  data: any[];
+  data: ChartDataItem[];
   firstBar: ChartDataKeyInterface;
   secondBar: ChartDataKeyInterface;
   xAxisKey: string;
-  formatter?: (value: any) => string | number;
+  formatter?: (value: string | number, index?: number) => string;
 }
 
 const BarChartsComponent = ({
@@ -35,10 +39,16 @@ const BarChartsComponent = ({
           <CartesianGrid strokeDasharray="3 3" />
           <XAxis
             dataKey={xAxisKey}
-            tickFormatter={formatter ?? ((value) => value)}
+            tickFormatter={(value, index) =>
+              formatter ? formatter(value, index) : String(value)
+            }
           />
           <YAxis tickCount={32} />
-          <Tooltip formatter={formatter ?? ((value) => value)} />
+          <Tooltip
+            formatter={(value: string | number) =>
+              formatter ? formatter(value) : value
+            }
+          />
           <Legend />
           <Bar
             type="monotone"

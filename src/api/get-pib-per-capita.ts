@@ -1,7 +1,6 @@
 import { ibgeApiClient } from "@/lib/IbgeApiClient";
 import { QueryInterface } from "@/types/QueryInterface";
 import { PIBValuesInterface } from "./../types/PIBValuesInterface";
-import { getTodayDollarQuotation } from "./get-today-dollar-quotation";
 
 // Function to get the per capita pib by year
 // Função para obter o PIB per capita por ano
@@ -17,7 +16,9 @@ export const getPibPerCapita = async (currency?: number) => {
       async ([year, value]) => {
         return {
           year: year,
-          value: currency ? await parseFloat(value) / currency : parseFloat(value),
+          value: currency
+            ? (await parseFloat(value)) / currency
+            : parseFloat(value),
         };
       }
     )

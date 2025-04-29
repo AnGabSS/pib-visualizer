@@ -11,6 +11,10 @@ const fredoka = Fredoka({
 export default function App({ Component, pageProps }: AppProps) {
   return (
     <main className={fredoka.className}>
+      {/* 
+        Display the NavBar component in the top of the every pages
+        Exibe o NavBar no topo de todas páginas 
+      */}
       <NavBar />
       <Component {...pageProps} />
     </main>

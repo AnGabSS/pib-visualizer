@@ -10,16 +10,16 @@ import {
   YAxis,
 } from "recharts";
 
-interface lineType{
-
+interface ChartDataItem {
+  [key: string]: string | number;
 }
 
 interface Props {
-  data: any[];
+  data: ChartDataItem[];
   firstLine: ChartDataKeyInterface;
   secondLine: ChartDataKeyInterface;
-  xAxisKey?: string;
-  formatter?: (value: any) => string | number;
+  xAxisKey: string;
+  formatter?: (value: string | number, index?: number) => string;
 }
 
 const LineChartsComponent = ({
@@ -41,10 +41,16 @@ const LineChartsComponent = ({
           <CartesianGrid strokeDasharray="3 3" />
           <XAxis
             dataKey={xAxisKey}
-            tickFormatter={formatter ?? ((value) => value)}
+            tickFormatter={(value, index) =>
+              formatter ? formatter(value, index) : String(value)
+            }
           />
           <YAxis />
-          <Tooltip formatter={formatter ?? ((value) => value)} />
+          <Tooltip
+            formatter={(value: string | number) =>
+              formatter ? formatter(value) : value
+            }
+          />
           <Legend />
           <Line
             type="monotone"

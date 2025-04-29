@@ -19,7 +19,9 @@ const TableComponent = ({ data, columns, className, style }: Props) => {
   useEffect(() => {
     const newTotalPages = Math.ceil(data.length / pageSize);
     setTotalPages(newTotalPages);
-    setPage(1); // Resetar para página 1 quando mudar o pageSize ou data
+    //Reset for the first page when the pageSize or data changes
+    //Reinicia para a primeira página quando a páginaSize ou os dados mudam
+    setPage(1);
   }, [data.length, pageSize]);
 
   useEffect(() => {

@@ -2,8 +2,10 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 
 const NavBar = () => {
-  const pathname = usePathname(); // Hook que pega o path atual corretamente
+  const pathname = usePathname();
 
+  //Get the actual path, and verify if it is the home (charts page) or table page
+  //Obtenha o caminho atual e verifique se é a página inicial (gráficos) ou a página de tabela
   const actualPath =
     pathname === "/" ? "home" : pathname === "/table" ? "table" : "";
 

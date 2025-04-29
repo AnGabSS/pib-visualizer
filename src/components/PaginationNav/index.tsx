@@ -16,6 +16,8 @@ const PaginationNav = ({
   const startPage = Math.floor((page - 1) / pagesPerView) * pagesPerView + 1;
   const endPage = Math.min(startPage + pagesPerView - 1, totalPages);
 
+  //Default button style, used when the button can be clicked
+  //Estilo de botão padrão, usado quando o botão pode ser clicado
   const defaultButtonStyle =
     "bg-emerald-500 text-white hover:bg-emerald-600 transition delay-20 duration-100 ease-in-out hover:-translate-y-1 hover:scale-110";
 
