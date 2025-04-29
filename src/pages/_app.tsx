@@ -8,6 +8,11 @@ const fredoka = Fredoka({
   weight: ["400", "700"],
 });
 
+const links = [
+  { label: "Gráficos", href: "/" },
+  { label: "Tabela", href: "/table" },
+];
+
 export default function App({ Component, pageProps }: AppProps) {
   return (
     <main className={fredoka.className}>
@@ -15,7 +20,7 @@ export default function App({ Component, pageProps }: AppProps) {
         Display the NavBar component in the top of the every pages
         Exibe o NavBar no topo de todas páginas 
       */}
-      <NavBar />
+      <NavBar links={links}/>
       <Component {...pageProps} />
     </main>
   );
